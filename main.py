@@ -35,7 +35,17 @@ async def process_start_command(message: types.Message):
     if user_id not in data:
         data[user_id] = 0
         save_json(data)
-    await message.reply("Стартанули!!!")
+    await message.reply("Стартанули!!!\n"
+                        "Кстати /reset всё сбросит")
+
+
+@dp.message_handler(commands=['reset'])
+async def process_start_command(message: types.Message):
+    data = load_json()
+    user_id = str(message.from_user.id)
+    data[user_id] = 0
+    save_json(data)
+    await message.reply(str(data[user_id]))
 
 
 @dp.message_handler()

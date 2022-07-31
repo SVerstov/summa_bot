@@ -1,11 +1,10 @@
-import os
 import logging
+import os
 
 from aiogram import Bot, types
 from aiogram.dispatcher import Dispatcher
-from aiogram.utils import executor
-from dotenv import load_dotenv
 from aiogram.utils.executor import start_webhook
+from dotenv import load_dotenv
 
 from save_and_load import load_json, save_json
 
@@ -22,7 +21,7 @@ WEBAPP_PORT = os.getenv('WEBAPP_PORT')
 bot = Bot(token=TOKEN)
 dp = Dispatcher(bot)
 
-logging.basicConfig(level=logging.INFO)
+logging.basicConfig(level=logging.ERROR)
 
 
 async def on_startup(dp):

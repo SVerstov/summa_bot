@@ -1,4 +1,5 @@
 import os
+import logging
 
 from aiogram import Bot, types
 from aiogram.dispatcher import Dispatcher
@@ -15,12 +16,13 @@ WEBHOOK_HOST = os.getenv('WEBHOOK_HOST')
 WEBHOOK_PATH = os.getenv('WEBHOOK_PATH')
 WEBHOOK_URL = f"{WEBHOOK_HOST}{WEBHOOK_PATH}"
 
-
 WEBAPP_HOST = os.getenv('WEBAPP_HOST')
 WEBAPP_PORT = os.getenv('WEBAPP_PORT')
 
 bot = Bot(token=TOKEN)
 dp = Dispatcher(bot)
+
+logging.basicConfig(level=logging.INFO)
 
 
 async def on_startup(dp):
@@ -44,7 +46,7 @@ async def counter(msg: types.Message):
         data = load_json()
         user_id = str(msg.from_user.id)
         try:
-            data[user_id] = round(number+data[user_id],2)
+            data[user_id] = round(number + data[user_id], 2)
         except KeyError:
             data[user_id] = number
         save_json(data)

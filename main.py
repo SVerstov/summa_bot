@@ -4,14 +4,27 @@ from aiogram import Bot, types
 from aiogram.dispatcher import Dispatcher
 from aiogram.utils import executor
 from dotenv import load_dotenv
+from aiogram.utils.executor import start_webhook
 
 from save_and_load import load_json, save_json
 
 load_dotenv()
 TOKEN = os.getenv('API_TOKEN')
 
+WEBHOOK_HOST = os.getenv('WEBHOOK_HOST')
+WEBHOOK_PATH = os.getenv('WEBHOOK_PATH')
+WEBHOOK_URL = f"{WEBHOOK_HOST}{WEBHOOK_PATH}"
+
+
+WEBAPP_HOST = os.getenv('WEBAPP_HOST')
+WEBAPP_PORT = os.getenv('WEBAPP_PORT')
+
 bot = Bot(token=TOKEN)
 dp = Dispatcher(bot)
+
+
+async def on_startup(dp):
+    await bot.set_webhook(WEBHOOK_URL)
 
 
 @dp.message_handler(commands=['start'])
@@ -41,4 +54,11 @@ async def counter(msg: types.Message):
 
 
 if __name__ == '__main__':
-    executor.start_polling(dp)
+    start_webhook(
+        dispatcher=dp,
+        webhook_path=WEBHOOK_PATH,
+        on_startup=on_startup,
+        skip_updates=True,
+        host=WEBAPP_HOST,
+        port=WEBAPP_PORT,
+    )

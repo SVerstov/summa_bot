@@ -59,7 +59,7 @@ async def counter(msg: types.Message):
         except KeyError:
             data[user_id] = number
         save_json(data)
-        await bot.send_message(msg.from_user.id, f'{data[user_id]:g}')
+        await bot.send_message(msg.from_user.id, f'{data[user_id]}'.rstrip('0').rstrip('.'))
     except ValueError:
         await bot.send_message(msg.from_user.id, 'WTF? Число давай')
 

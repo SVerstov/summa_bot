@@ -25,9 +25,8 @@ async def reset(msg: types.Message):
     await msg.reply('Сброс')
 
 
-@dp.message_handler(regexp=re.compile(r'(^|\s)[-+]?\d+[р₽]\b', re.IGNORECASE))
+@dp.message_handler(regexp=re.compile(r'(^|\s)\d+\u20BD', re.IGNORECASE))
 async def counter(msg: types.Message, regexp: re.match):
     number = int(regexp[0][:-1])
     chat_sum = make_sum(msg.chat.id, number)
     await msg.answer(f"Сумма: *{chat_sum}*", parse_mode="MarkdownV2")
-

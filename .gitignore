@@ -1,3 +1,5 @@
 .env
 /data/
 register_bot.py
+
+__pycache__/
